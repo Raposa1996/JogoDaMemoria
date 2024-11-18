@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Jogo da memória com o tema de animais">
+    <title>Jogo da Memória</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/images/favicon.ico" sizes="32x32">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Font Awesome (para ícones) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+</head>
+
+<body>
+    <!-- Cabeçalho -->
+    <header>
+        <div class="signature">
+            <h2>Desenvolvido por Higor</h2>
+        </div>
+
+        <!-- Botão de Início do Jogo e Temporizador -->
+        <div class="btnStart">
+            <div class="btn_front gradient-border">
+                <div id="clock">00:00</div>
+            </div>
+            <div class="btn_back">
+                <button id="startGame" onclick="startGame()">Jogar</button>
+            </div>
+        </div>
+        <div id="muteBtn" onclick="muteSounds()"></div>
+    </header>
+
+    <!-- Tabuleiro do Jogo -->
+    <main id="gameBoard">
+        <!-- Cartas do jogo -->
+    </main>
+
+    <!-- Animação ao vencer o jogo -->
+    <div id="yay" style="display: none;">
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+        <lottie-player src="https://assets3.lottiefiles.com/packages/lf20_ISbOsd.json" background="transparent"
+            speed="1" loop autoplay>
+        </lottie-player>
+    </div>
+
+    <!-- Tela de Fim de Jogo -->
+    <div id="gameOver" style="display: none;">
+        <div class="greeting">
+            <h2>Parabéns!</h2>
+            <p id="result">Seu tempo foi de</p>
+        </div>
+        <button id="restartBtn" onclick="resetGame()">Jogar novamente</button>
+    </div>
+
+    <!-- Script do Jogo -->
+    <script src="js/script.js"></script>
+</body>
+
+</html>
