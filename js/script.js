@@ -1,4 +1,4 @@
-const animals = ["dog", "car", "elephant", "pig", "aligator", "fish", "rat", "goat"]; // Lista de animais
+const animals = ["dog", "pig", "goat", "aligator", "car", "rat", "shark", "tiger"]; 
 
 let firstCard = null;
 let secondCard = null;
@@ -7,6 +7,7 @@ let moves = 0;
 let timer = null;
 let seconds = 0;
 let minutes = 0;
+let isPaused = false;
 
 function createBoard() {
     const gameBoard = document.getElementById('gameBoard');
@@ -22,12 +23,13 @@ function createBoard() {
         card.classList.add('memory-card');
         card.setAttribute('data-animal', animal);
 
+        // Corrigindo o caminho para usar apenas o formato .png
         card.innerHTML = `
             <div class="front-face">
-                <img src="../assets/img/dog.png " alt="Imagem de ${animal}">
+                <img src="../assets/img/${animal}.png" alt="Imagem de ${animal}">
             </div>
             <div class="back-face">
-                <img src="../assets/img/H.jfif" alt="Verso da carta">
+                <img src="assets/img/H.jfif" alt="Verso da carta">
             </div>
         `;
 
@@ -39,20 +41,35 @@ function createBoard() {
     });
 }
 
+function setupButtons() {
+    const controls = document.getElementById('controls');
+    controls.innerHTML = ''; // Limpa os botões anteriores
+
+    // Botão de jogar
+    const playButton = document.createElement('button');
+    playButton.textContent = "Jogar";
+    playButton.classList.add('play-button', 'modern-btn');
+    playButton.addEventListener('click', resetGame);
+    controls.appendChild(playButton);
+
+    // Botão de encerrar jogo
+    const endGameButton = document.createElement('button');
+    endGameButton.textContent = "Encerrar Jogo";
+    endGameButton.classList.add('end-game-button', 'modern-btn');
+    endGameButton.addEventListener('click', endGameManually);
+    controls.appendChild(endGameButton);
+}
+
 function flipCard() {
-    // Previne interações enquanto o tabuleiro está bloqueado
     if (lockBoard || this.classList.contains('flip')) return;
 
-    // Vira a carta
     this.classList.add('flip');
 
-    // Se for a primeira carta, armazena
     if (!firstCard) {
         firstCard = this;
         return;
     }
 
-    // Se for a segunda carta, verifica correspondência
     secondCard = this;
     checkMatch();
 }
@@ -63,11 +80,9 @@ function checkMatch() {
 }
 
 function disableCards() {
-    // Desativa as cartas correspondentes
     firstCard.removeEventListener('click', flipCard);
     secondCard.removeEventListener('click', flipCard);
 
-    // Verifica se o jogo acabou
     if (document.querySelectorAll('.memory-card.flip').length === animals.length * 2) {
         endGame();
     }
@@ -78,7 +93,6 @@ function disableCards() {
 function unflipCards() {
     lockBoard = true;
     setTimeout(() => {
-        // Vira as cartas de volta
         firstCard.classList.remove('flip');
         secondCard.classList.remove('flip');
         resetBoard();
@@ -107,6 +121,17 @@ function endGame() {
     document.getElementById('gameOver').style.display = 'flex';
 }
 
+function endGameManually() {
+    clearInterval(timer);
+    document.getElementById('result').textContent = `Jogo encerrado manualmente. Seu tempo foi de ${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+    document.getElementById('gameOver').style.display = 'flex';
+
+    // Bloqueia todas as cartas
+    document.querySelectorAll('.memory-card').forEach(card => {
+        card.style.pointerEvents = 'none';
+    });
+}
+
 function resetGame() {
     document.getElementById('gameOver').style.display = 'none';
     moves = 0;
@@ -120,6 +145,7 @@ function resetGame() {
 function startGame() {
     createBoard();
     startTimer();
+    setupButtons(); // Configura os botões na interface
 }
 
 // Inicializa o jogo
