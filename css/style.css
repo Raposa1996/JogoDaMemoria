@@ -1,11 +1,12 @@
 body {
     display: flex;
     justify-content: center;
-  
+    align-items: center;
+    min-height: 100vh;
     background-image: url(https://t2.tudocdn.net/718083?w=1920&h=1080);
-    background-size: cover; /* A imagem cobre toda a tela */
-    background-position: center; /* Centraliza a imagem */
-    background-attachment: fixed; /* Fixa a imagem enquanto a página rola */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     font-family: 'Arial', sans-serif;
     margin: 0;
     color: #fff;
@@ -22,7 +23,7 @@ header {
 
 .btn_back {
     display: flex;
-    gap: 10px; /* Espaço entre os botões */
+    gap: 10px;
 }
 
 .btn_back button {
@@ -31,15 +32,14 @@ header {
     cursor: pointer;
     border: none;
     border-radius: 5px;
-    background: #4CAF50; /* Cor de fundo do botão */
-    color: white; /* Cor do texto */
+    background: #4CAF50;
+    color: white;
     transition: background 0.3s;
 }
 
 .btn_back button:hover {
-    background: #45a049; /* Cor ao passar o mouse */
+    background: #45a049;
 }
-
 
 .signature h2 {
     margin: 0;
@@ -102,32 +102,40 @@ header {
     transform: rotateY(180deg);
 }
 
-.front-face,
-.back-face {
+.front-face, .back-face {
     width: 100%;
     height: 100%;
     position: absolute;
     backface-visibility: hidden;
-    border-radius: 10px;
-}
-
-.front-face {
-    background: #2c3e50;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.front-face {
+    background: #eeeeee;
+    transform: rotateY(180deg);
 }
 
 .back-face {
     background: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
-.front-face img,
-.back-face img {
-    max-width: 80%;
+.memory-card.flip .front-face {
+    transform: rotateY(0);
+}
+
+.memory-card.flip .back-face {
+    transform: rotateY(180deg);
+}
+
+/* Estilos específicos para imagens dentro das cartas */
+.front-face img, .back-face img {
+    width: 90%; /* Reduzido para 90% */
+    height: 90%; /* Reduzido para 90% */
+    object-fit: cover;
 }
 
 .game-info {
@@ -148,6 +156,7 @@ header {
     flex-direction: column;
     color: white;
 }
+
 .modern-btn {
     position: relative;
     padding: 10px 20px;
@@ -197,9 +206,14 @@ header {
 #gameOver button {
     background-color: #1e90ff;
     border: none;
-    padding:0;}
+    padding: 10px 20px;
+    font-size: 18px;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
-    .memory-card .front-face {
-        transform: rotateY(180deg);
-    }
-    
+#gameOver button:hover {
+    background-color: #187bcd;
+}
